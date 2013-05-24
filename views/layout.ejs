@@ -37,6 +37,17 @@
 
       <!-- Jumbotron -->
       <div class="jumbotron">
+
+        <div id='logininfo'>
+           <% if (session.user) { %>
+               <%= session.user.name %>
+               <a href='/logout'> Logout </a> 
+           <% } else { %>
+              <a href='/login?redir=/posts'> Login </a> 
+              <a href='/users/new'> Register </a> 
+           <% } %>
+       </div>
+
         <section>
           <% var flash = flash() %>
           <% if (flash.info) { %>
@@ -72,6 +83,7 @@
                  </article>
               <% } %>
         </section>
+
         <section>
           <hr />
            <%- body %>
@@ -87,6 +99,7 @@
           <div class="span6">
             <h3>PATRICIA LOPEZ</h3>
             <p> By Leticia and Maria </p>
+            <p> <%= new Date() %> </p>
           </div>
           
           <div class="span6">

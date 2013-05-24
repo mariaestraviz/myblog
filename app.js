@@ -10,6 +10,7 @@ var express = require('express')
   , path = require('path')
   , partials = require('express-partials')
   , counter = require('./counter.js')
+  , sessionController = require('./routes/session_controller.js')
   , postController = require('./routes/post_controller.js')
   , userController = require('./routes/user_controller.js');
 
@@ -32,9 +33,15 @@ app.configure(function(){
 	app.use(express.session());
 
   app.use(require('connect-flash')());
+
+  app.use(sessionController.tiempoLimite);
+
+
   // Hacer visible req.flash() en las vistas
   app.use(function(req, res, next) {
      res.locals.flash = function() { return req.flash() };
+      // Hacer visible req.session en las vistas
+     res.locals.session = req.session;    
      next();
   });
 
@@ -72,6 +79,12 @@ app.locals.escapeText = function(text) {
 
 app.get('/', routes.index);
 app.get('/about', about.about);
+
+//---------------------
+
+app.get('/login',  sessionController.new);
+app.post('/login', sessionController.create);
+app.get('/logout', sessionController.destroy);
 
 //---------------------
 

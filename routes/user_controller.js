@@ -139,9 +139,31 @@ exports.update = function(req, res, next) {
                                   validate_errors: validate_errors});
         return;
     }
-    
+    /*
     req.user.save(['name','email'])
         .success(function() {
+            req.flash('success', 'Usuario actualizado con éxito.');
+            res.redirect('/users');
+        })
+        .error(function(error) {
+            next(error);
+        });
+*/
+    var fields_to_update = ['name','email'];
+    
+    // ¿Cambio el password?
+    if (req.body.user.password) {
+        console.log('Hay que actualizar el password');
+        req.user.salt = createNewSalt();
+        req.user.hashed_password = encriptarPassword(req.body.user.password, 
+                                                             req.user.salt);
+        fields_to_update.push('salt');
+        fields_to_update.push('hashed_password');
+    }
+    
+    req.user.save(fields_to_update)
+        .success(function() {
+            req.session.user.name= req.body.user.name;
             req.flash('success', 'Usuario actualizado con éxito.');
             res.redirect('/users');
         })
@@ -162,3 +184,59 @@ exports.destroy = function(req, res, next) {
             next(error);
         });
 };
+
+// ----------------------------------
+// Autenticacion
+// ----------------------------------
+
+/*
+ * Crea un string aleatorio para usar como salt.
+ */
+function createNewSalt() {
+    return Math.round((new Date().valueOf() * Math.random())) + '';
+};
+
+/*
+ * Encripta un password en claro.
+ * Mezcla un password en claro con el salt proporcionado, ejecuta un SHA1 digest, 
+ * y devuelve 40 caracteres hexadecimales.
+ */
+function encriptarPassword(password, salt) {
+    return crypto.createHmac('sha1', salt).update(password).digest('hex');
+};
+
+/*
+ * Autenticar un usuario.
+ *
+ * Busca el usuario con el login dado en la base de datos y comprueba su password.
+ * Si todo es correcto ejecuta callback(null,user).
+ * Si la autenticación falla o hay errores se ejecuta callback(error).
+ */
+exports.autenticar = function(login, password, callback) {
+    
+    models.User.find({where: {login: login}})
+        .success(function(user) {
+            if (user) {
+                console.log('Encontrado el usuario.');
+
+                if (user.hashed_password == "" && password == "") {
+                    callback(null,user);
+                    return;
+                }
+                
+                var hash = encriptarPassword(password, user.salt);
+                
+                if (hash == user.hashed_password) {
+                    callback(null,user);
+                } else {
+                    callback('Password erróneo.');
+                };
+            } else {
+                callback('No existe ningún usuario registrado con ese login.');
+            }
+        })
+        .error(function(err) {
+            callback(err);
+        });
+}; 
+
