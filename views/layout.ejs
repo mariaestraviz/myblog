@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="utf-8">
+    <title>Template &middot; Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="../stylesheets/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/myStyle.css">
+    <link href="../stylesheets/css/bootstrap-responsive.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container">
+
+      <div class="masthead">
+        <h3 class="muted">WFMA para los amigos</h3>
+        
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li><a href="/">HOME</a></li>
+                <li><a href="#">GALLERY</a></li>
+                <li><a href="/posts">POSTS</a></li>
+                <li><a href="/about">ABOUT</a></li>
+                <li><a href="#">CONTACT</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      </div>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <section>
+          <hr />
+           <%- body %>
+          <hr />
+          </section>
+      </div>
+
+
+      <div class="footer">
+        <!-- Example row of columns -->
+        <div class="row-fluid">
+
+          <div class="span6">
+            <h3>PATRICIA LOPEZ</h3>
+            <p> By Leticia and Maria </p>
+          </div>
+          
+          <div class="span6">
+            <h3>SEARCH</h3> <h6> Enter a word and we will find all the posts that contain it! </h6>
+            <form method='GET' action='/posts/search'>
+              <input type="text" name="palabra" size='20' value='...' />
+              <input type="submit" value="Search"/>
+            </form>
+            <!--<p><a class="btn" type= "submit">Search</a></p> -->
+         </div>
+          
+        </div>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap-transition.js"></script>
+    <script src="../assets/js/bootstrap-alert.js"></script>
+    <script src="../assets/js/bootstrap-modal.js"></script>
+    <script src="../assets/js/bootstrap-dropdown.js"></script>
+    <script src="../assets/js/bootstrap-scrollspy.js"></script>
+    <script src="../assets/js/bootstrap-tab.js"></script>
+    <script src="../assets/js/bootstrap-tooltip.js"></script>
+    <script src="../assets/js/bootstrap-popover.js"></script>
+    <script src="../assets/js/bootstrap-button.js"></script>
+    <script src="../assets/js/bootstrap-collapse.js"></script>
+    <script src="../assets/js/bootstrap-carousel.js"></script>
+    <script src="../assets/js/bootstrap-typeahead.js"></script>
+
+</body>
+</html>
