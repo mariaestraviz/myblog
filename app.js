@@ -6,12 +6,12 @@
 var express = require('express')
   , routes = require('./routes')
   , about = require('./routes/about')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
   , partials = require('express-partials')
   , counter = require('./counter.js')
-  , postController = require('./routes/post_controller.js');
+  , postController = require('./routes/post_controller.js')
+  , userController = require('./routes/user_controller.js');
 
 var util = require('util');
 
@@ -37,7 +37,7 @@ app.configure(function(){
      res.locals.flash = function() { return req.flash() };
      next();
   });
-  
+
   app.use(counter.getContador);
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
@@ -72,7 +72,6 @@ app.locals.escapeText = function(text) {
 
 app.get('/', routes.index);
 app.get('/about', about.about);
-app.get('/users', user.list);
 
 //---------------------
 
@@ -86,6 +85,18 @@ app.get('/posts/:postid([0-9]+)/edit', postController.edit);
 app.put('/posts/:postid([0-9]+)', postController.update);
 app.delete('/posts/:postid([0-9]+)', postController.destroy);
 app.get('/posts/search', postController.search);
+
+//---------------------
+
+app.param('userid', userController.load);
+
+app.get('/users', userController.index);
+app.get('/users/new', userController.new);
+app.get('/users/:userid([0-9]+)', userController.show);
+app.post('/users', userController.create);
+app.get('/users/:userid([0-9]+)/edit', userController.edit);
+app.put('/users/:userid([0-9]+)', userController.update);
+app.delete('/users/:userid([0-9]+)', userController.destroy);
 
 //---------------------
 

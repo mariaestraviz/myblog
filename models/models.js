@@ -14,9 +14,13 @@ var sequelize = new Sequelize(
 		  host: process.env.DATABASE_HOST, 
 		  omitNull: true
 });
-// Importar la definicion de la clase Post desde post.js.
-// Y que este modulo exporta la clase Post:
+
+// Importar la definicion de los modelos:
+// - Post desde post.js.
+// - User desde user.js.
+// Y que este modulo exporte los modelos:
 exports.Post = sequelize.import(path.join(__dirname,'post'));
+exports.User = sequelize.import(path.join(__dirname,'user'));
 sequelize.sync();
 
 

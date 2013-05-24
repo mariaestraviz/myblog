@@ -1,8 +1,11 @@
-  { 	"username":"inmpvpdjzpxbgc", 
-	"password":"PrYHO9A1YTOIBYVywVE6hFlfvD", 
-	"database":"db75njpp25e3ph", 	
-	"host":"ec2-54-227-255-156.compute-1.amazonaws.com", 
-	"dialect": "postgres", 
-	"port": "5432", 
-	"protocol": "postgres", 
-	"omitNull": true}
+{
+    "username": "",
+    "password": "",
+    "database": "",
+    "host":     "",
+    "dialect":  "sqlite",
+    "port":     "",
+    "protocol": "",
+    "storage":  "blog.sqlite",
+    "omitNull": true
+}
