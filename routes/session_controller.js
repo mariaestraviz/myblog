@@ -102,7 +102,7 @@ exports.destroy = function(req, res) {
 exports.tiempoLimite = function(req, res, next) {
     
     if (req.session.user) {
-        if (req.session.user.now + 10000 >= Date.now()) {
+        if (req.session.user.now + 60000 >= Date.now()) {
             req.session.user.now = Date.now();
             console.log(Date.now());
             

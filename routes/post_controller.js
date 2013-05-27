@@ -20,14 +20,35 @@ next();
         });
 };
 
+/*
+* Comprueba que el usuario logeado es el author.
+*/
+exports.loggedUserIsAuthor = function(req, res, next) {
+    
+    if (req.session.user && req.session.user.id == req.post.authorId) {
+next();
+    } else {
+console.log('Operación prohibida: El usuario logeado no es el autor del post.');
+res.send(403);
+    }
+};
+
+
+
 // GET /posts
 exports.index = function(req, res, next) {
-      var format = req.params.format || 'html';
+    
+    var format = req.params.format || 'html';
     format = format.toLowerCase();
 
     models.Post
-        .findAll({order: 'updatedAt DESC'})
+        .findAll({order: 'updatedAt DESC',
+include: [ { model: models.User, as: 'Author' } ]
+})
         .success(function(posts) {
+
+          console.log(posts);
+          
             switch (format) {
               case 'html':
               case 'htm':
@@ -86,27 +107,38 @@ function posts_to_xml(posts) {
 
 // GET /posts/33
 exports.show = function(req, res, next) {
-    var format = req.params.format || 'html';
-    format = format.toLowerCase();
+  // Buscar el autor
+  models.User
+    .find({where: {id: req.post.authorId}})
+    .success(function(user) {
+    // Si encuentro al autor lo añado como el atributo author, sino añado {}.
+      req.post.author = user || {};
 
-    switch (format) {
-      case 'html':
-      case 'htm':
-          res.render('posts/show', { post: req.post });
-          break;
-      case 'json':
-          res.send(req.post);
-          break;
-      case 'xml':
-             res.send(post_to_xml(req.post));
-          break;
-      case 'txt':
-          res.send(req.post.title+' ('+req.post.body+')');
-          break;
-      default:
-          console.log('No se soporta el formato \".'+format+'\" pedido para \"'+req.url+'\".');
-          res.send(406);
-    }
+      var format = req.params.format || 'html';
+      format = format.toLowerCase();
+
+            switch (format) {
+              case 'html':
+              case 'htm':
+                  res.render('posts/show', { post: req.post });
+                  break;
+              case 'json':
+                  res.send(req.post);
+                  break;
+              case 'xml':
+                     res.send(post_to_xml(req.post));
+                  break;
+              case 'txt':
+                  res.send(req.post.title+' ('+req.post.body+')');
+                  break;
+              default:
+                  console.log('No se soporta el formato \".'+format+'\" pedido para \"'+req.url+'\".');
+                  res.send(406);
+            }
+        })
+        .error(function(error) {
+            next(error);
+        });
 };
 
 function post_to_xml(post) {
@@ -152,10 +184,11 @@ exports.new = function(req, res, next) {
 
 // POST /posts
 exports.create = function(req, res, next) {
+  
     var post = models.Post.build(
         { title: req.body.post.title,
           body: req.body.post.body,
-          authorId: 0
+          authorId: req.session.user.id
         });
     
     var validate_errors = post.validate();
@@ -179,7 +212,8 @@ exports.create = function(req, res, next) {
         })
         .error(function(error) {
             next(error);
-        });
+        });  
+
 };
 
 // GET /posts/33/edit

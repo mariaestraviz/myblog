@@ -96,27 +96,32 @@ app.param('postid', postController.load);
 
 app.get('/posts.:format?', postController.index);
 
-app.get('/posts/new', 
-  sessionController.requiresLogin,
+app.get('/posts/new',
+        sessionController.requiresLogin,
         postController.new);
 
 app.get('/posts/:postid([0-9]+).:format?', postController.show);
 
-app.post('/posts', 
-  sessionController.requiresLogin,
+app.post('/posts',
+sessionController.requiresLogin,
         postController.create);
 
-app.get('/posts/:postid([0-9]+)/edit', 
-  sessionController.requiresLogin,
+app.get('/posts/:postid([0-9]+)/edit',
+        sessionController.requiresLogin,
+        postController.loggedUserIsAuthor,
         postController.edit);
 
-app.put('/posts/:postid([0-9]+)', 
-  sessionController.requiresLogin,
+app.put('/posts/:postid([0-9]+)',
+        sessionController.requiresLogin,
+        postController.loggedUserIsAuthor,
         postController.update);
 
-app.delete('/posts/:postid([0-9]+)', 
+app.delete('/posts/:postid([0-9]+)',
            sessionController.requiresLogin,
+           postController.loggedUserIsAuthor,
            postController.destroy);
+
+
 
 app.get('/posts/search', postController.search);
 
@@ -129,17 +134,19 @@ app.get('/users/new', userController.new);
 app.get('/users/:userid([0-9]+)', userController.show);
 app.post('/users', userController.create);
 
-app.get('/users/:userid([0-9]+)/edit', 
-  sessionController.requiresLogin,
+app.get('/users/:userid([0-9]+)/edit',
+        sessionController.requiresLogin,
+userController.loggedUserIsUser,
         userController.edit);
 
-app.put('/users/:userid([0-9]+)', 
-  sessionController.requiresLogin,
+app.put('/users/:userid([0-9]+)',
+        sessionController.requiresLogin,
+userController.loggedUserIsUser,
         userController.update);
 
-app.delete('/users/:userid([0-9]+)', 
-  sessionController.requiresLogin,
-           userController.destroy);
+// app.delete('/users/:userid([0-9]+)',
+// sessionController.requiresLogin,
+// userController.destroy);
 
 //---------------------
 
