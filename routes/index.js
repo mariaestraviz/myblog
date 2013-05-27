@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { 'visitors': res.locals.visitors});
+  res.render('index', { 'visitors': res.locals.visitors });
 };

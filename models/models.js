@@ -1,5 +1,3 @@
-
-
 // Modelos ORM
 var path = require('path');
 var Sequelize = require('sequelize');
@@ -12,6 +10,7 @@ var sequelize = new Sequelize(
 		  protocol: process.env.DATABASE_PROTOCOL, 
 		  port: process.env.DATABASE_PORT, 
 		  host: process.env.DATABASE_HOST, 
+		  storage: process.env.DATABASE_STORAGE,
 		  omitNull: true
 });
 
@@ -22,5 +21,3 @@ var sequelize = new Sequelize(
 exports.Post = sequelize.import(path.join(__dirname,'post'));
 exports.User = sequelize.import(path.join(__dirname,'user'));
 sequelize.sync();
-
-

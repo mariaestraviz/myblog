@@ -1,4 +1,8 @@
+
+
 var models = require('../models/models.js');
+//FALTABA
+var crypto = require('crypto');
 
 
 /*
@@ -63,13 +67,10 @@ exports.new = function(req, res, next) {
 
 // POST /users
 exports.create = function(req, res, next) {
-
     var user = models.User.build(
         { login: req.body.user.login,
-          name: req.body.user.name,
-          email: req.body.user.email,
-          hashed_password: '',
-          salt: ''
+          name:  req.body.user.name,
+          email: req.body.user.email
         });
     
     // El login debe ser unico:
@@ -78,7 +79,7 @@ exports.create = function(req, res, next) {
             if (existing_user) {
                 console.log("Error: El usuario \""+ req.body.user.login +"\" ya existe: "+existing_user.values);
                 req.flash('error', "Error: El usuario \""+ req.body.user.login +"\" ya existe.");
-                res.render('users/new',
+                res.render('users/new', 
                            { user: user,
                              validate_errors: {
                                  login: 'El usuario \"'+ req.body.user.login +'\" ya existe.'
@@ -97,8 +98,18 @@ exports.create = function(req, res, next) {
                     res.render('users/new', {user: user,
                                              validate_errors: validate_errors});
                     return;
-                }
+                } 
                 
+                // El password no puede estar vacio
+                if ( ! req.body.user.password) {
+                    req.flash('error', 'El campo Password es obligatorio.');
+                    res.render('users/new', {user: user});
+                    return;
+                }
+
+                user.salt = createNewSalt();
+                user.hashed_password = encriptarPassword(req.body.user.password, user.salt);
+
                 user.save()
                     .success(function() {
                         req.flash('success', 'Usuario creado con éxito.');
@@ -112,6 +123,7 @@ exports.create = function(req, res, next) {
         .error(function(error) {
             next(error);
         });
+
 };
 
 // GET /users/33/edit
@@ -239,4 +251,3 @@ exports.autenticar = function(login, password, callback) {
             callback(err);
         });
 }; 
-
