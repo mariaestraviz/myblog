@@ -12,7 +12,8 @@ var express = require('express')
   , sessionController = require('./routes/session_controller.js')
   , postController = require('./routes/post_controller.js')
   , userController = require('./routes/user_controller.js')
-  , commentController = require('./routes/comment_controller.js');
+  , commentController = require('./routes/comment_controller.js')
+  , attachmentController = require('./routes/attachment_controller.js');
 
 var util = require('util');
 
