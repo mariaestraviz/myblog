@@ -17,9 +17,10 @@ var sequelize = new Sequelize(
 // Importar la definicion de los modelos:
 // - Post desde post.js.
 // - User desde user.js.
+// - Comment desde comment.js.
 var Post = sequelize.import(path.join(__dirname,'post'));
 var User = sequelize.import(path.join(__dirname,'user'));
-// sequelize.sync();
+var Comment = sequelize.import(path.join(__dirname,'comment'));
 
 // Relaciones
 
@@ -32,6 +33,9 @@ var User = sequelize.import(path.join(__dirname,'user'));
 // en vez de UserId, he añadido una opcion que lo indica.
 User.hasMany(Post, {foreignKey: 'authorId'});
 
+User.hasMany(Comment, {foreignKey: 'authorId'});
+Post.hasMany(Comment, {foreignKey: 'postId'});
+
 // La llamada Post.belongsTo(User);
 // - crea en el modelo de Post un atributo llamado UserId,
 // - y en el prototipo de Post se crean los metodos getUser y setUser.
@@ -42,7 +46,11 @@ User.hasMany(Post, {foreignKey: 'authorId'});
 // setAuthor y getAuthor.
 Post.belongsTo(User, {as: 'Author', foreignKey: 'authorId'});
 
+Comment.belongsTo(User, {as: 'Author', foreignKey: 'authorId'});
+Comment.belongsTo(Post, {foreignKey: 'postId'});
+
 
 // Exportar los modelos:
 exports.Post = Post;
 exports.User = User;
+exports.Comment = Comment;
