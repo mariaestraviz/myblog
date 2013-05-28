@@ -108,7 +108,7 @@ function posts_to_xml(posts) {
 // GET /posts/33
 exports.show = function(req, res, next) {
  
-    // Buscar el autor
+        // Buscar el autor
     models.User
         .find({where: {id: req.post.authorId}})
         .success(function(user) {
@@ -122,18 +122,16 @@ exports.show = function(req, res, next) {
             
                   // Buscar comentarios
                   models.Comment
-                       .findAll({ offset: req.pagination.offset,
-                                  limit: req.pagination.limit,
-                                  where: {postId: req.post.id},
-                                  order: 'updatedAt DESC',
-                                  include: [ { model: models.User, as: 'Author' } ]
+                       .findAll({where: {postId: req.post.id},
+                                 order: 'updatedAt DESC',
+                                 include: [ { model: models.User, as: 'Author' } ] 
                        })
                        .success(function(comments) {
 
                           var format = req.params.format || 'html';
                           format = format.toLowerCase();
 
-                          switch (format) {
+                          switch (format) { 
                             case 'html':
                             case 'htm':
                                 var new_comment = models.Comment.build({

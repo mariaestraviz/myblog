@@ -1,0 +1,221 @@
+/* CSS Document */
+    body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
+
+      /* Custom container */
+      .container {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+      .container > hr {
+        margin: 60px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h2 {
+        font-size: 70px;
+        line-height: 1;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+
+      /* Customize the navbar links to be fill the entire space of the .navbar */
+      .navbar .navbar-inner {
+        padding: 0;
+      }
+      .navbar .nav {
+        margin: 0;
+        display: table;
+        width: 100%;
+      }
+      .navbar .nav li {
+        display: table-cell;
+        width: 1%;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-weight: bold;
+        text-align: center;
+        border-left: 1px solid rgba(255,255,255,.75);
+        border-right: 1px solid rgba(0,0,0,.1);
+      }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+
+      #flashinfo {
+        width: 450px;
+        border: 2px solid blue;
+        padding: 7px;
+        padding-bottom: 0;
+        margin-bottom: 20px;
+        background-color: #f0f0f0;
+      }
+
+      #flashinfo h3 {
+          text-align: left;
+          font-weight: bold;
+          padding: 5px 5px 5px 15px;
+          font-size: 12px;
+          margin: -7px;
+          margin-bottom: 0px;
+          background-color: #00c;
+          color: #fff;
+      }
+
+      #flashinfo ul li {
+          font-size: 12px;
+          list-style: square;
+      }
+
+
+      #flashsuccess {
+        width: 450px;
+        border: 2px solid green;
+        padding: 7px;
+        padding-bottom: 0;
+        margin-bottom: 20px;
+        background-color: #f0f0f0;
+      }
+
+      #flashsuccess h3 {
+          text-align: left;
+          font-weight: bold;
+          padding: 5px 5px 5px 15px;
+          font-size: 12px;
+          margin: -7px;
+          margin-bottom: 0px;
+          background-color: #0c0;
+          color: #fff;
+      }
+
+      #flashsuccess ul li {
+          font-size: 12px;
+          list-style: square;
+      }
+
+      #flasherror {
+        width: 450px;
+        border: 2px solid red;
+        padding: 7px;
+        padding-bottom: 0;
+        margin-bottom: 20px;
+        background-color: #f0f0f0;
+      }
+
+      #flasherror h3 {
+          text-align: left;
+          font-weight: bold;
+          padding: 5px 5px 5px 15px;
+          font-size: 12px;
+          margin: -7px;
+          margin-bottom: 0px;
+          background-color: #c00;
+          color: #fff;
+      }
+
+      #flasherror ul li {
+          font-size: 12px;
+          list-style: square;
+      }
+
+      .invalid_field {
+        padding: 2px;
+        background-color: red;
+        display: table;
+      }
+
+      .field {
+        width: 100%;
+      }
+      #logininfo {
+        float: left;
+        clear: both;
+      }
+
+      /*-----------------------
+      Post
+      ------------------------*/
+      .post {
+        padding: 10px 20px 20px 20px;
+        margin-bottom: 30px;
+        background-color: #f8f8f8;
+        -webkit-border-radius: 16px;
+           -moz-border-radius: 16px;
+                border-radius: 16px;
+      }
+
+      .post h1 {
+        margin-bottom: 0;
+        font-size: 40px;
+        line-height: 1;
+        letter-spacing: -1px;
+        color: inherit;
+      }
+
+      .post h2 {
+        margin-bottom: 0;
+        font-size: 30px;
+        line-height: 1;
+        letter-spacing: -1px;
+        color: inherit;
+      }
+
+      .post p {
+        font-size: 18px;
+        font-weight: 200;
+        line-height: 27px;
+        color: inherit;
+      }
+
+      /*-----------------------
+      Comment
+      ------------------------*/
+      .comment {
+        padding: 10px 20px 20px 20px;
+        margin-bottom: 30px;
+        background-color: #f8f8f8;
+        -webkit-border-radius: 6px;
+           -moz-border-radius: 6px;
+                border-radius: 6px;
+      }
+
+      .comment h2 {
+        margin-bottom: 0;
+        font-size: 30px;
+        line-height: 1;
+        letter-spacing: -1px;
+        color: inherit;
+      }
+
+      .comment p {
+        font-size: 18px;
+        font-weight: 200;
+        line-height: 27px;
+        color: inherit;
+      }
