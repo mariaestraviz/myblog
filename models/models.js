@@ -1,3 +1,4 @@
+
 // Modelos ORM
 var path = require('path');
 var Sequelize = require('sequelize');
@@ -22,6 +23,7 @@ var Post = sequelize.import(path.join(__dirname,'post'));
 var User = sequelize.import(path.join(__dirname,'user'));
 var Comment = sequelize.import(path.join(__dirname,'comment'));
 var Attachment = sequelize.import(path.join(__dirname,'attachment'));
+var Favourite = sequelize.import(path.join(__dirname, 'favourite'));
 
 // Relaciones
 
@@ -33,11 +35,12 @@ var Attachment = sequelize.import(path.join(__dirname,'attachment'));
 // Como el atributo del modelo Post que apunta a User se llama authorId
 // en vez de UserId, he añadido una opcion que lo indica.
 User.hasMany(Post, {foreignKey: 'authorId'});
-
 User.hasMany(Comment, {foreignKey: 'authorId'});
-Post.hasMany(Comment, {foreignKey: 'postId'});
+User.hasMany(Favourite, {foreignKey: 'userId'});
 
+Post.hasMany(Comment, {foreignKey: 'postId'});
 Post.hasMany(Attachment, {foreignKey: 'postId'});
+Post.hasMany(Favourite, {foreignKey: 'userId'});
 
 // La llamada Post.belongsTo(User);
 // - crea en el modelo de Post un atributo llamado UserId,
@@ -54,9 +57,12 @@ Comment.belongsTo(Post, {foreignKey: 'postId'});
 
 Attachment.belongsTo(Post, {foreignKey: 'postId'});
 
+Favourite.belongsTo(Post, {foreignKey: 'postId'});
+
 
 // Exportar los modelos:
 exports.Post = Post;
 exports.User = User;
 exports.Comment = Comment;
 exports.Attachment = Attachment;
+exports.Favourite = Favourite;

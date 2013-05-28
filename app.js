@@ -13,6 +13,7 @@ var express = require('express')
   , postController = require('./routes/post_controller.js')
   , userController = require('./routes/user_controller.js')
   , commentController = require('./routes/comment_controller.js')
+  , favController = require('./routes/favourites_controller.js')
   , attachmentController = require('./routes/attachment_controller.js');
 
 var util = require('util');
@@ -219,6 +220,21 @@ userController.loggedUserIsUser,
 // userController.destroy);
 
 //---------------------
+
+app.get('/users/:userid([0-9]+)/favourites', favController.index);
+
+app.put('/users/:userid([0-9]+)/favourites/:postid([0-9]+)',
+        sessionController.requiresLogin,
+        userController.loggedUserIsUser,
+        favController.add);
+
+app.delete('/users/:userid([0-9]+)/favourites/:postid([0-9]+)',
+        sessionController.requiresLogin,
+        userController.loggedUserIsUser,
+        favController.del);
+
+//---------------------
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
