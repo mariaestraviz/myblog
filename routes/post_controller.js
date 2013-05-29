@@ -41,10 +41,13 @@ exports.index = function(req, res, next) {
     var format = req.params.format || 'html';
     format = format.toLowerCase();
 
+    // tenemos que pasarle el autor, número comentarios y los post favoritos.
     models.Post
         .findAll({order: 'updatedAt DESC',
-        //include: [ { model: models.User, as: 'Author' } ]
-        include: [ { model: models.User, as: 'Author'}, {model: models.Comment, as: 'Comments' } ]
+        // include: [ { model: models.User, as: 'Author' } ]
+        include: [ { model: models.User, as: 'Author'}, 
+           {model: models.Comment, as: 'Comments' } ,
+           models.Favourite ]
         })
         .success(function(posts) {
 

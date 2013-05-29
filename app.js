@@ -188,10 +188,10 @@ app.put('/posts/:postid([0-9]+)',
         postController.loggedUserIsAuthor,
         postController.update);
 
-app.delete('/posts/:postid([0-9]+)',
-           sessionController.requiresLogin,
-           postController.loggedUserIsAuthor,
-           postController.destroy);
+//app.delete('/posts/:postid([0-9]+)',
+//           sessionController.requiresLogin,
+//           postController.loggedUserIsAuthor,
+//           postController.destroy);
 
 
 
@@ -215,9 +215,9 @@ app.put('/users/:userid([0-9]+)',
 userController.loggedUserIsUser,
         userController.update);
 
-// app.delete('/users/:userid([0-9]+)',
-// sessionController.requiresLogin,
-// userController.destroy);
+app.delete('/users/:userid([0-9]+)',
+ sessionController.requiresLogin,
+ userController.destroy);
 
 //---------------------
 

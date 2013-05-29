@@ -1,0 +1,5 @@
+- ROUTES --> post_controller: hay que pasarle los post favoritos
+favourite_controller : no necesito el parámetro best
+
+
+-VIEWS post/ show

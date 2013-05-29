@@ -4,28 +4,51 @@
     <div class="page-header">
       <h2>
         <a href='/posts/<%= posts[i].id %>' class='titlelink'> <%= posts[i].title %> </a>
+
+        <% var fav=false%> 
+
         <% if (session.user) {%> 
-        
-        <form class='pull-right'
-          method='post' 
-          action='/users/<%= session.user.id%>/favourites/<%= posts[i].id%>'>
 
-          <input type='hidden' name='_method' value='put'>
-          <input type='hidden' name='best' value=1>
+            <% for (var j in posts[i].favourites){ %>
+                <% if (posts[i].favourites[j].userId == session.user.id && posts[i].favourites[j].postId == posts[i].id) {%>
+                    <% fav=true%> 
+                <% } %>
+            <% } %>
 
-          <input type="image" src="/images/estrella1.png" 
+            <% if (fav) {%>
+
+              <form  method='post' action='/users/<%= session.user.id %>/favourites/<%= posts[i].id %>' >
+                   
+                   <input type='hidden' name='_method' value='delete'>
+                   
+                   <input type="image" src="/images/estrella2.png"
                     onclick="this.form._method.value='delete'; this.form.submit()" />
-            
-          <input type="image" src="/images/estrella0.png" 
-                    onclick="this.form.best.value=5; this.form.submit()" />
-      </form>
 
-    <% } %>
+              </form>
+                          
+            <% } else{ %>
+                
+                <form   method='post' action='/users/<%= session.user.id %>/favourites/<%= posts[i].id %>' >
+
+                    <input type='hidden' name='_method' value='put'>
+                    
+
+                    <input type="image" src="/images/estrella1.png" onclick="this.fav=true; this.form.submit()" />
+
+                </form>
+
+
+                  <% } %>
+        
+        <% } %>
+
         <small>por <em> <%= posts[i].author && posts[i].author.name || "Sin autor" %> </em></small>
       </h2>
 
      <em> <%= posts[i].updatedAt.toLocaleDateString() %></em>
-     <h7><em>Este post tiene: <%= posts[i].comments.length %> comentarios</em></h7>
+     
+     <h7><em>Este post tiene: <%= posts[i].comments.length %> comentarios</em></h7> 
+     
    </div>
       
      <p>
